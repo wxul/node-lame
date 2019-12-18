@@ -23,13 +23,17 @@ using namespace node;
 
 namespace nodelame {
 
-  void Initialize(target) {
+  void Initialize(v8::Local<v8::Object> exports) {
     Nan::HandleScope scope;
 
-    InitLame(target);
-    InitMPG123(target);
+    InitLame(exports);
+    InitMPG123(exports);
   }
 
 } // nodelame namespace
+
+NAN_MODULE_INIT(Nodelame){
+
+}
 
 NODE_MODULE(bindings, nodelame::Initialize);

@@ -23,15 +23,15 @@ using namespace node;
 
 namespace nodelame {
 
-void InitLame(Handle<Object>);
-void InitMPG123(Handle<Object>);
+  InitLame(Handle<Object>);
+  InitMPG123(Handle<Object>);
 
-void Initialize(Handle<Object> target) {
-  Nan::HandleScope scope;
+  Initialize(Handle<Object> target) {
+    Nan::HandleScope scope;
 
-  InitLame(target);
-  InitMPG123(target);
-}
+    InitLame(target);
+    InitMPG123(target);
+  }
 
 } // nodelame namespace
 

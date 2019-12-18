@@ -24,7 +24,7 @@
 
 using namespace v8;
 using namespace node;
-using namespace nodelame;
+// using namespace nodelame;
 
 namespace nodelame {
 
@@ -50,13 +50,13 @@ NAN_METHOD(PASTE(node_lame_set_, fn)) { \
 
 /* get_lame_version() */
 NAN_METHOD(node_get_lame_version) {
-  info.GetReturnValue().Set(Nan::New<String>(get_lame_version()).ToLocalChecked());
+  info.GetReturnValue().Set(Nan::New<v8::String>(get_lame_version()).ToLocalChecked());
 }
 
 
 /* get_lame_os_bitness() */
 NAN_METHOD(node_get_lame_os_bitness) {
-  info.GetReturnValue().Set(Nan::New<String>(get_lame_os_bitness()).ToLocalChecked());
+  info.GetReturnValue().Set(Nan::New<v8::String>(get_lame_os_bitness()).ToLocalChecked());
 }
 
 
@@ -378,7 +378,7 @@ void InitLame(Handle<Object> target) {
 
   /* sizeof's */
 #define SIZEOF(value) \
-  Nan::ForceSet(target, Nan::New<String>("sizeof_" #value).ToLocalChecked(), Nan::New<Integer>(static_cast<uint32_t>(sizeof(value))), \
+  Nan::ForceSet(target, Nan::New<v8::String>("sizeof_" #value).ToLocalChecked(), Nan::New<Integer>(static_cast<uint32_t>(sizeof(value))), \
       static_cast<PropertyAttribute>(ReadOnly|DontDelete))
   SIZEOF(short);
   SIZEOF(int);
@@ -387,7 +387,7 @@ void InitLame(Handle<Object> target) {
 
 
 #define CONST_INT(value) \
-  Nan::ForceSet(target, Nan::New<String>(#value).ToLocalChecked(), Nan::New<Integer>(value), \
+  Nan::ForceSet(target, Nan::New<v8::String>(#value).ToLocalChecked(), Nan::New<Integer>(value), \
       static_cast<PropertyAttribute>(ReadOnly|DontDelete));
 
   // vbr_mode_e

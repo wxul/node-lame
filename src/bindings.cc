@@ -26,8 +26,8 @@ namespace nodelame {
   void Initialize(v8::Local<v8::Object> exports) {
     Nan::HandleScope scope;
 
-    InitLame(exports);
-    InitMPG123(exports);
+    nodelame::InitLame(exports);
+    nodelame::InitMPG123(exports);
   }
 
 } // nodelame namespace

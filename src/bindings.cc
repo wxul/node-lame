@@ -23,10 +23,7 @@ using namespace node;
 
 namespace nodelame {
 
-  void InitLame(Nan::Handle<Nan::Object>);
-  void InitMPG123(Handle<Nan::Object>);
-
-  void Initialize(Nan::Handle<Nan::Object> target) {
+  void Initialize(Handle<Object> target) {
     Nan::HandleScope scope;
 
     InitLame(target);

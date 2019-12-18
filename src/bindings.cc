@@ -23,7 +23,7 @@ using namespace node;
 
 namespace nodelame {
 
-  void Initialize(Handle<Object> target) {
+  void Initialize(target) {
     Nan::HandleScope scope;
 
     InitLame(target);

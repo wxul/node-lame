@@ -188,7 +188,7 @@ void node_lame_encode_buffer_after (uv_work_t *req) {
 
   encode_req *r = (encode_req *)req->data;
 
-  Handle<Value> argv[1];
+  v8::Local<v8::Value> argv[1];
   argv[0] = Nan::New<Integer>(r->rtn);
 
   Nan::TryCatch try_catch;
@@ -247,7 +247,7 @@ NAN_METHOD(node_lame_get_id3v1_tag) {
 
   UNWRAP_GFP;
 
-  Local<Object> outbuf = info[1]->ToObject();
+  v8::Local<v8::Object> outbuf = info[1]->ToLocalChecked();
   unsigned char *buf = (unsigned char *)Buffer::Data(outbuf);
   size_t buf_size = (size_t)Buffer::Length(outbuf);
 
@@ -264,7 +264,7 @@ NAN_METHOD(node_lame_get_id3v1_tag) {
 NAN_METHOD(node_lame_get_id3v2_tag) {
   UNWRAP_GFP;
 
-  Local<Object> outbuf = info[1]->ToObject();
+  v8::Local<v8::Object> outbuf = info[1]->ToLocalChecked();
   unsigned char *buf = (unsigned char *)Buffer::Data(outbuf);
   size_t buf_size = (size_t)Buffer::Length(outbuf);
 
@@ -336,44 +336,44 @@ NAN_METHOD(node_lame_samplerates) {
 }
 
 // define the node_lame_get/node_lame_set functions
-FN(unsigned long, Number, num_samples);
-FN(int, Int32, in_samplerate);
-FN(int, Int32, num_channels);
-FN(float, Number, scale);
-FN(float, Number, scale_left);
-FN(float, Number, scale_right);
-FN(int, Int32, out_samplerate);
-FN(int, Int32, analysis);
-FN(int, Int32, bWriteVbrTag);
-FN(int, Int32, quality);
-FN(MPEG_mode, Int32, mode);
+FN(unsigned long, v8::Number, num_samples);
+FN(int, v8::Int32, in_samplerate);
+FN(int, v8::Int32, num_channels);
+FN(float, v8::Number, scale);
+FN(float, v8::Number, scale_left);
+FN(float, v8::Number, scale_right);
+FN(int, v8::Int32, out_samplerate);
+FN(int, v8::Int32, analysis);
+FN(int, v8::Int32, bWriteVbrTag);
+FN(int, v8::Int32, quality);
+FN(MPEG_mode, v8::Int32, mode);
 
-FN(int, Int32, brate);
-FN(float, Number, compression_ratio);
-FN(int, Int32, copyright);
-FN(int, Int32, original);
-FN(int, Int32, error_protection);
-FN(int, Int32, extension);
-FN(int, Int32, strict_ISO);
-FN(int, Int32, disable_reservoir);
-FN(int, Int32, quant_comp);
-FN(int, Int32, quant_comp_short);
-FN(int, Int32, exp_nspsytune);
-FN(vbr_mode, Int32, VBR);
-FN(int, Int32, VBR_q);
-FN(float, Number, VBR_quality);
-FN(int, Int32, VBR_mean_bitrate_kbps);
-FN(int, Int32, VBR_min_bitrate_kbps);
-FN(int, Int32, VBR_max_bitrate_kbps);
-FN(int, Int32, VBR_hard_min);
-FN(int, Int32, lowpassfreq);
-FN(int, Int32, lowpasswidth);
-FN(int, Int32, highpassfreq);
-FN(int, Int32, highpasswidth);
+FN(int, v8::Int32, brate);
+FN(float, v8::Number, compression_ratio);
+FN(int, v8::Int32, copyright);
+FN(int, v8::Int32, original);
+FN(int, v8::Int32, error_protection);
+FN(int, v8::Int32, extension);
+FN(int, v8::Int32, strict_ISO);
+FN(int, v8::Int32, disable_reservoir);
+FN(int, v8::Int32, quant_comp);
+FN(int, v8::Int32, quant_comp_short);
+FN(int, v8::Int32, exp_nspsytune);
+FN(vbr_mode, v8::Int32, VBR);
+FN(int, v8::Int32, VBR_q);
+FN(float, v8::Number, VBR_quality);
+FN(int, v8::Int32, VBR_mean_bitrate_kbps);
+FN(int, v8::Int32, VBR_min_bitrate_kbps);
+FN(int, v8::Int32, VBR_max_bitrate_kbps);
+FN(int, v8::Int32, VBR_hard_min);
+FN(int, v8::Int32, lowpassfreq);
+FN(int, v8::Int32, lowpasswidth);
+FN(int, v8::Int32, highpassfreq);
+FN(int, v8::Int32, highpasswidth);
 // ...
 
 
-void InitLame(Handle<Object> target) {
+void InitLame(v8::Local<v8::Object> target) {
   Nan::HandleScope scope;
 
   /* sizeof's */

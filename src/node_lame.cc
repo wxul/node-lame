@@ -196,9 +196,10 @@ void node_lame_encode_buffer_after (uv_work_t *req) {
   argv[0] = Nan::New<Integer>(r->rtn);
 
   Nan::TryCatch try_catch;
-  v8::Local<v8::Object> recv;
-  // Nan::Call(r->callback, Nan::GetCurrentContext()->Global(), 1, argv);
-  Nan::New(r->callback)->Call(Nan::GetCurrentContext()->Global(), recv, 1, argv);
+  v8::Isolate *isolate = v8::Isolate::GetCurrent();
+  v8::Local<v8::Function> callback = v8::Local<v8::Function>::New(isolate, r->callback);
+  Nan::Call(callback, Nan::GetCurrentContext()->Global(), 1, argv);
+  // Nan::New(r->callback)->Call(Nan::GetCurrentContext()->Global(), recv, 1, argv);
 
   // cleanup
   r->callback.Reset();

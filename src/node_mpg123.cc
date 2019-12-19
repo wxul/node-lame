@@ -202,12 +202,15 @@ void node_mpg123_feed_after (uv_work_t *req) {
   Nan::HandleScope scope;
   feed_req *r = (feed_req *)req->data;
 
-  Handle<Value> argv[1];
+  Local<Value> argv[1];
   argv[0] = Nan::New<Integer>(r->rtn);
 
   Nan::TryCatch try_catch;
 
-  Nan::New(r->callback)->Call(Nan::GetCurrentContext()->Global(), 1, argv);
+  v8::Isolate *isolate = v8::Isolate::GetCurrent();
+  v8::Local<v8::Function> callback = v8::Local<v8::Function>::New(isolate, r->callback);
+  Nan::Call(callback, Nan::GetCurrentContext()->Global(), 1, argv);
+  // Nan::New(r->callback)->Call(Nan::GetCurrentContext()->Global(), 1, argv);
 
   // cleanup
   r->callback.Reset();
@@ -256,14 +259,17 @@ void node_mpg123_read_after (uv_work_t *req) {
   Nan::HandleScope scope;
   read_req *r = (read_req *)req->data;
 
-  Handle<Value> argv[3];
+  Local<Value> argv[3];
   argv[0] = Nan::New<Integer>(r->rtn);
   argv[1] = Nan::New<Integer>(static_cast<uint32_t>(r->done));
   argv[2] = Nan::New<Integer>(r->meta);
 
   Nan::TryCatch try_catch;
 
-  Nan::New(r->callback)->Call(Nan::GetCurrentContext()->Global(), 3, argv);
+  v8::Isolate *isolate = v8::Isolate::GetCurrent();
+  v8::Local<v8::Function> callback = v8::Local<v8::Function>::New(isolate, r->callback);
+  Nan::Call(callback, Nan::GetCurrentContext()->Global(), 3, argv);
+  // Nan::New(r->callback)->Call(Nan::GetCurrentContext()->Global(), 3, argv);
 
   // cleanup
   r->callback.Reset();
@@ -304,7 +310,7 @@ void node_mpg123_id3_after (uv_work_t *req) {
   mpg123_id3v1 *v1 = ireq->v1;
   mpg123_id3v2 *v2 = ireq->v2;
   int r = ireq->rtn;
-  Handle<Value> rtn;
+  Local<Value> rtn;
 
   if (r == MPG123_OK) {
     if (v1 != NULL) {
@@ -374,13 +380,16 @@ void node_mpg123_id3_after (uv_work_t *req) {
     }
   }
 
-  Handle<Value> argv[2];
+  Local<Value> argv[2];
   argv[0] = Nan::New<Integer>(ireq->rtn);
   argv[1] = rtn;
 
   Nan::TryCatch try_catch;
 
-  Nan::New(ireq->callback)->Call(Nan::GetCurrentContext()->Global(), 2, argv);
+  v8::Isolate *isolate = v8::Isolate::GetCurrent();
+  v8::Local<v8::Function> callback = v8::Local<v8::Function>::New(isolate, ireq->callback);
+  Nan::Call(callback, Nan::GetCurrentContext()->Global(), 2, argv);
+  // Nan::New(ireq->callback)->Call(Nan::GetCurrentContext()->Global(), recv, 2, argv);
 
   // cleanup
   ireq->callback.Reset();
@@ -392,11 +401,11 @@ void node_mpg123_id3_after (uv_work_t *req) {
 }
 
 
-void InitMPG123(Handle<Object> target) {
+void InitMPG123(Local<Object> target) {
   Nan::HandleScope scope;
 
 #define CONST_INT(value) \
-  Nan::ForceSet(target, Nan::New<String>(#value).ToLocalChecked(), Nan::New<Integer>(value), \
+  Nan::DefineOwnProperty(target, Nan::New<String>(#value).ToLocalChecked(), Nan::New<Integer>(value), \
       static_cast<PropertyAttribute>(ReadOnly|DontDelete));
 
   // mpg123_errors

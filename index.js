@@ -9,7 +9,7 @@ exports.Decoder = require('./lib/decoder');
  * The `Encoder` accepts raw PCM data and outputs an MP3 file.
  */
 
-exports.Encoder = require('./lib/encoder');
+// exports.Encoder = require('./lib/encoder');
 
 /*
  * Channel Modes
